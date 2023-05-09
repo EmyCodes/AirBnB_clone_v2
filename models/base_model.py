@@ -21,7 +21,7 @@ class BaseModel:
             if kwargs:
                 for k, v in kwargs.items():
                     setattr(self, k, v)
-            storage.new(self)
+            self.save()
         else:
             kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
