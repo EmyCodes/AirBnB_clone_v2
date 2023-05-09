@@ -53,6 +53,6 @@ class FileStorage:
     def delete(self, obj=None):
         """ Delete obj from __objects """
         try:
-           del self.__objects[f'{type(obj.__name__)}.{obj.id}']
+           del self.__objects[f'{type(obj).__name__}.{obj.id}']
         except Exception:
             pass

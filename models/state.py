@@ -8,7 +8,7 @@ import os
 
 class State(BaseModel, Base):
     __tablename__ = 'states'
-        """ State class """
+    """ State class """
     name = Column(String(128), nullable=False)
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
@@ -16,14 +16,10 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
-        """
-         Getter attribute that returns the list of City instances
-        with state_id equals to the current State.id
-        """
-        from models import Storage, City
-        cityList == []
-        for city in storage.all(city).values():
-            if city.state_id == self.id
-                cityList.append(city)
-        return cityList
+            from models import Storage, City
+            cityList == []
+            for city in storage.all(city).values():
+                if city.state_id == self.id:
+                    cityList.append(city)
+            return cityList
         

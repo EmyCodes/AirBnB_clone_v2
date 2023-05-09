@@ -2,6 +2,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
+#from models.user import User
+from models.city import City
+from models.state import State
+#from models.amenity import Amenity
+#from models.place import Place
+#from models.review import Review
+
 import os
 class DBStorage:
     __engine = None
@@ -22,16 +29,15 @@ class DBStorage:
         if cls:
             results = self.__session.query(eval(cls).all())
         else:
-            all_objects = []
-            for obj in [User, State, City, Amenity, Place, Review]:
-                all_objects += self.__session.query(obj).all()
-            return {f"{obj.__class__.__name__}.{obj.id}": obj for obj in all_objects}
+             results = self.__session.query(State).all()
+             results.extend(self.__session.query(State).all())
+        return {f"{obj.__class__.__name__}.{obj.id}": obj for obj in results}
 
     def new(self, obj):
         self.__session.add(obj)
 
     def save(self):
-        self.__session.commit(obj)
+        self.__session.commit()
 
     def delete(self, obj=None):
         if obj != None:
