@@ -2,14 +2,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
-#from models.user import User
+from models.user import User
 from models.city import City
 from models.state import State
 #from models.amenity import Amenity
-#from models.place import Place
-#from models.review import Review
-
+from models.place import Place
+from models.review import Review
 import os
+
 class DBStorage:
     __engine = None
     __session = None
@@ -26,12 +26,13 @@ class DBStorage:
        Base.metadata.drop_all('self.__engine')
 
     def all(self, cls=None):
-        if cls:
-            results = self.__session.query(eval(cls).all())
+        if type(cls) == str:
+            all_objects = self.__session.query(eval(cls).all())
         else:
-             results = self.__session.query(State).all()
-             results.extend(self.__session.query(State).all())
-        return {f"{obj.__class__.__name__}.{obj.id}": obj for obj in results}
+             all_objects = []
+        for obj in [State, City, User, Place, Review]: #Amenity, Place, Review]:
+            all_objects += self.__session.query(obj).all()
+        return {f"{type(obj).__name__}.{obj.id}": obj for obj in all_objects}
 
     def new(self, obj):
         self.__session.add(obj)
