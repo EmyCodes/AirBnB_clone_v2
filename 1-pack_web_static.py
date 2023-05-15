@@ -19,4 +19,4 @@ def do_pack():
                                                                  dt.minute,
                                                                  dt.second)
     if local('tar -cvzf {} web_static'.format(archive_file)).failed:
-        return None
+   \     return None
